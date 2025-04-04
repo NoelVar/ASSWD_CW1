@@ -66,7 +66,8 @@ const AdminKeyMgmt = () => {
             const response = await fetch('https://asswd-backend.onrender.com/api/delete-key', {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ id: selected, email })
             })

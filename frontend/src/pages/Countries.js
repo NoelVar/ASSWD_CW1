@@ -133,7 +133,9 @@ const Countries = () => {
                             <Link to='/api' >API keys</Link>
                         </div>
                 }
-                {message && <div className='auth-message'>{message}</div>}
+                {message && 
+                    <p className="message-popup">{message}</p>
+                }
             </div>
         </div>
     )
