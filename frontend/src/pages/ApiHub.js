@@ -14,7 +14,7 @@ const ApiHub = () => {
         const getAllKeys = async () => {
             const email = localStorage.getItem('email')
             
-            const response = await fetch('http://localhost:7000/api/all-user-keys', {
+            const response = await fetch('https://asswd-backend.onrender.com/api/all-user-keys', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

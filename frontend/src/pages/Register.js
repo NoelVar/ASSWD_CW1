@@ -16,7 +16,7 @@ const Register = () => {
     const registerAttempt = async (e) => {
         e.preventDefault()
         try {
-            const response = await fetch('http://localhost:7000/auth/register', {
+            const response = await fetch('https://asswd-backend.onrender.com/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

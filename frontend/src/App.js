@@ -19,7 +19,7 @@ function App() {
     const getUser = async () => {
         const id = localStorage.getItem('id')
         
-        const response = await fetch('http://localhost:7000/user/single-user', {
+        const response = await fetch('https://asswd-backend.onrender.com/user/single-user', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

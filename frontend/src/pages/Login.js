@@ -14,7 +14,7 @@ const Login = () => {
     const loginAttempt = async (e) => {
         e.preventDefault()
         try {
-            const response = await fetch('http://localhost:7000/auth/login', {
+            const response = await fetch('https://asswd-backend.onrender.com/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

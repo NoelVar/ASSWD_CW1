@@ -19,7 +19,7 @@ const AdminKeyMgmt = () => {
     useEffect(() => {
         const getAllKeys = async () => {
             
-            const response = await fetch('http://localhost:7000/api/get-all-keys', {
+            const response = await fetch('https://asswd-backend.onrender.com/api/get-all-keys', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -48,7 +48,7 @@ const AdminKeyMgmt = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:7000/api/delete-key', {
+            const response = await fetch('https://asswd-backend.onrender.com/api/delete-key', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
