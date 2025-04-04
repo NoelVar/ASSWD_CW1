@@ -43,10 +43,8 @@ const AdminKeyMgmt = () => {
             }
         }
 
-        // ONLY RUNS FUNCTION IF THE TOKEN IS SET
-        if (!token) {
-            getAllKeys()
-        }
+        getAllKeys()
+        
     }, [])
 
     // HANDKING DELETION OF KEY
