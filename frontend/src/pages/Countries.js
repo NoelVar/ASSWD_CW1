@@ -9,6 +9,7 @@ const Countries = () => {
     const [countries, setCountries] = useState(null)
     const [activeKey, setActiveKey] = useState(false)
     const [searchPrompt, setSearchPrompt] = useState('')
+    const [message, setMessage] = useState('')
     const [filteredCountries, setFilteredCountries] = useState(null)
     // RETRIEVING USER AND ID FROM LOCALSTORAGE
     const user = localStorage.getItem('user')
@@ -132,6 +133,7 @@ const Countries = () => {
                             <Link to='/api' >API keys</Link>
                         </div>
                 }
+                {message && <div className='auth-message'>{message}</div>}
             </div>
         </div>
     )
