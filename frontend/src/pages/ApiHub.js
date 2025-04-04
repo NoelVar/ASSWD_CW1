@@ -63,9 +63,9 @@ const ApiHub = () => {
             if (response.ok) {
                 popUpGenerator(data.message)
                 dispatch({type: 'GENERATE_KEYS', payload: data.key[0]})
-                setTimeout(() => {
-                    window.location.reload()
-                }, 3000)
+                // setTimeout(() => {
+                //     window.location.reload()
+                // }, 3000)
             }
             
         } catch (err) {
@@ -100,9 +100,9 @@ const ApiHub = () => {
             }
             if (response.ok) {
                 popUpGenerator("Selected API key has been activated!")
-                setTimeout(() => {
-                    window.location.reload()
-                }, 3000)
+                // setTimeout(() => {
+                //     window.location.reload()
+                // }, 3000)
             }
             
             
@@ -135,9 +135,9 @@ const ApiHub = () => {
 
             if (response.ok) {
                 popUpGenerator(data.message)
-                setTimeout(() => {
-                    window.location.reload()
-                }, 3000)
+                // setTimeout(() => {
+                //     window.location.reload()
+                // }, 3000)
             }
             
         } catch (err) {
@@ -172,9 +172,9 @@ const ApiHub = () => {
             }
             if (response.ok) {
                 popUpGenerator("Selected API key has been deleted!")
-                setTimeout(() => {
-                    window.location.reload()
-                }, 3000)
+                // setTimeout(() => {
+                //     window.location.reload()
+                // }, 3000)
             }
             
             
