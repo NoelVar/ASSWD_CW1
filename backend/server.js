@@ -33,12 +33,10 @@ app.use('/api', apiKeyRoute)
 // NOTE: DB CONNECTION
 mongoose.connect(process.env.DB_CONNECTION)
     .then(() => {
-        // NOTE: LISTENING FOR REQUESTS
-        // DEBUG: THIS PART IS FOR DEVELOPMENT
-        // app.listen(7000, () => {
-        //     console.log('Listening on port 7000')
-        // })
-        console.log("Connected to database")
+        //NOTE: LISTENING FOR REQUESTS
+        app.listen(7000, () => {
+            console.log('Listening on port 7000')
+        })
 
     })
     .catch((error) => {
