@@ -44,7 +44,7 @@ const ApiHub = () => {
         const id = localStorage.getItem('id')
 
         try {
-            const response = await fetch('http://localhost:7000/api/generate-key', {
+            const response = await fetch('https://asswd-backend.onrender.com/api/generate-key', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ const ApiHub = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:7000/api/activate-key', {
+            const response = await fetch('https://asswd-backend.onrender.com/api/activate-key', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ const ApiHub = () => {
         const email = localStorage.getItem('email')
 
         try {
-            const response = await fetch('http://localhost:7000/api/deactivate-key', {
+            const response = await fetch('https://asswd-backend.onrender.com/api/deactivate-key', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ const ApiHub = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:7000/api/delete-key', {
+            const response = await fetch('https://asswd-backend.onrender.com/api/delete-key', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
