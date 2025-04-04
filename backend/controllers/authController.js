@@ -81,7 +81,10 @@ const userRegister = async (req, res) => {
     if (userExists) {
         return res.status(400).json({ message: "This email address is already registered." })
     }
+    
+    // CREATING BASE ROLE
     const role = 'user'
+
     try {
         // GENERATING SALT
         const salt = await bcrypt.genSalt(10)
@@ -116,7 +119,6 @@ const userRegister = async (req, res) => {
 
     } catch (err) {
         // CHECKING FOR ERRORS
-        console.log(err)
         const error = new Error("Something went wrong.")
         error.status = 500
         return error

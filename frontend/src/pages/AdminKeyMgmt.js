@@ -1,12 +1,16 @@
+// NOTE: IMPORTS ----------------------------------------------------------------------------------
 import { useEffect, useState } from "react"
 
+// ADMIN KEY MANAGEMENT
 const AdminKeyMgmt = () => {
 
+    // CONSTANTS/VARIABLES
     const [allKeys, setAllKeys] = useState(null)
     const [message, setMessage] = useState(null)
     const [selected, setSelected] = useState(null)
     const [email, setEmail] = useState(null)
 
+    // CREATING POP GENERATOR FUNCTION
     const popUpGenerator = (passedInData) => {
         setMessage(passedInData)
         setTimeout(() => {
@@ -14,30 +18,42 @@ const AdminKeyMgmt = () => {
         }, 5000)
     }
 
+    // GETTING TOKEN FROM LOCAL STORAGE
     const token = localStorage.getItem('token')
 
+    // FETCHING ALL KEYS
     useEffect(() => {
         const getAllKeys = async () => {
-            
-            const response = await fetch('https://asswd-backend.onrender.com/api/get-all-keys', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
+            try {
+                const response = await fetch('https://asswd-backend.onrender.com/api/get-all-keys', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
 
-            if (response.ok) {
-                const data = await response.json()
-                setAllKeys(data)
-                console.log(data)
+                // CHECKING RESPONSE AND SETTING KEYS
+                if (response.ok) {
+                    const data = await response.json()
+                    setAllKeys(data)
+                }
+            } catch (err) {
+                // CHECKING FOR ERRORS
+                popUpGenerator("Could not fetch data!")
             }
         }
 
-        getAllKeys()
+        // ONLY RUNS FUNCTION IF THE TOKEN IS SET
+        if (!token) {
+            getAllKeys()
+        }
     }, [])
 
+    // HANDKING DELETION OF KEY
     const handleDelete = async (e) => {
         e.preventDefault()
+
+        // VALIDATION
         if (!selected) {
             popUpGenerator("Please select an API key!")
             return 
@@ -47,6 +63,7 @@ const AdminKeyMgmt = () => {
             return
         }
 
+        // ATTEMPTING TO REMOVE KEY
         try {
             const response = await fetch('https://asswd-backend.onrender.com/api/delete-key', {
                 method: "POST",
@@ -57,6 +74,7 @@ const AdminKeyMgmt = () => {
             })
             const data = await response.json()
 
+            // CHECKING IF RESPONSE WAS OKAY
             if (!response.ok) {
                 popUpGenerator(data.message)
                 return
@@ -70,12 +88,13 @@ const AdminKeyMgmt = () => {
             
             
         } catch (err) {
-            console.error(err.message)
+            // RETURNING ERROR
             popUpGenerator(err.message)
             return
         }
     }
 
+    // RETURNING VISUAL COMPONENT
     return (
         <div className="api-hub">
             <h1>Admin Key Management</h1>
@@ -113,3 +132,5 @@ const AdminKeyMgmt = () => {
 }
 
 export default AdminKeyMgmt
+
+// END OF DOCUMENT --------------------------------------------------------------------------------

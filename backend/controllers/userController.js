@@ -56,3 +56,5 @@ module.exports = {
     getAllUsers,
     getSingleUser
 }
+
+// END OF DOCUMENT --------------------------------------------------------------------------------

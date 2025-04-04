@@ -1,6 +1,8 @@
+// NOTE: IMPORTS ----------------------------------------------------------------------------------
 import { APIContext } from "../context/APIContext";
 import { useContext } from "react";
 
+// CREATING useAPIContext HOOK
 export const useAPIContext = () => {
     const context = useContext(APIContext)
 
@@ -10,3 +12,5 @@ export const useAPIContext = () => {
 
     return context
 }
+
+// END OF DOCUMENT --------------------------------------------------------------------------------

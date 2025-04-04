@@ -1,11 +1,15 @@
-import { createRoutesFromChildren, Link } from "react-router-dom"
+// NOTE: IMPORTS ----------------------------------------------------------------------------------
+import { Link } from "react-router-dom"
 import Logout from "./Logout"
 import { useAuthContext } from "../hooks/useAuthContext"
 
+// NAVBAR
 const NavigationBar = ({ role }) => {
-    console.log("RECIEVED " + role)
+    
+    // CONSTANT/VARIABLES
     const { user } = useAuthContext()
 
+    // RETURNING VISUAL COMPONENT
     return (
         <div className="navigation-bar">
             <ul>
@@ -18,6 +22,7 @@ const NavigationBar = ({ role }) => {
                     <li>
                         <Link to='/'>Home</Link>
                     </li>
+                    {/* CONDITIONAL MENU POINTS */}
                     {user &&
                         <li>
                             <Link to='/countries'>Countries</Link>
@@ -50,3 +55,4 @@ const NavigationBar = ({ role }) => {
 }
 
 export default NavigationBar
+// END OF DOCUMENT --------------------------------------------------------------------------------

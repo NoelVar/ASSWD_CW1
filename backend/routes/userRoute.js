@@ -10,8 +10,9 @@ const router = express.Router()
 
 // NOTE: GET ALL USERS ROUTE
 router.get('/all-users', getAllUsers)
-router.post('/single-user', getSingleUser)
 
+// NOTE: GET SINGLE USER ROUTE
+router.post('/single-user', getSingleUser)
 
 module.exports = router
 // END OF DOCUMENT --------------------------------------------------------------------------------

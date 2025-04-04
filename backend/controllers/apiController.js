@@ -23,10 +23,10 @@ const genApiKey = async (req, res) => {
         // GENERATING KEY
         const key = uuid4()
 
-        // Check if key already exists
+        // CHECK IF KEY ALREADY EXISTS
         const keyExists = await userModel.findOne({ "apikeys.key": key })
         if (keyExists) {
-            // If key exists, generate a new one
+            // IF KEY EXISTS CALL THE FUNTION AGAIN
             return genApiKey(req, res)
         }
 
@@ -49,7 +49,7 @@ const genApiKey = async (req, res) => {
             { $addToSet: { apikeys: apiKey } },
             { new: true }
         )
-
+        // CHECKING IF ANYTHING WENT WRONG DURING GENERATIONS
         if (!saveKey) {
             return res.status(400).json({ message: "API key Could not be generated."})
         }
@@ -58,6 +58,7 @@ const genApiKey = async (req, res) => {
         return res.status(201).json({message: "API key generated successfully!", key: apiKey})
 
     } catch(err) {
+        // RETURNING ERROR IF THERE WAS ANY
         res.status(500).json({ message: "Something went wrong."  + err})
     }
 }
@@ -107,7 +108,6 @@ const activateApiKey = async (req, res) => {
 
         // RETRIEVING SELECTED API KEY FROM ALL API KEYS
         var apikey = null
-        
         for (var i = 0; i < user.apikeys.length; i++) {
             if (user.apikeys[i]._id.toString() == id) {
                 apikey = user.apikeys[i]
@@ -143,10 +143,12 @@ const activateApiKey = async (req, res) => {
             }
         )
 
+        // CHECKS IF ANYTHING WENT WRONG DURING ACTIVATION
         if (!updateKey) {
             return res.status(400).json({ message: 'Couldn\'t activate api key' })
         }
 
+        // SENDS THE UPDATED KEY BACK ALONG WITH A STATUS 200 (OK)
         res.status(200).json(updateKey)
     } catch (err) {
         // RETURNING ERROR IF SOMETHING WENT WRONG
@@ -154,6 +156,7 @@ const activateApiKey = async (req, res) => {
     }
 }
 
+// NOTE: DEACTIVATING ALL KEYS --------------------------------------------------------------------
 const deactivateAllKeys = async (req, res) => {
     const { email } = req.body
 
@@ -179,10 +182,12 @@ const deactivateAllKeys = async (req, res) => {
             }
         )
 
+        // CHECKING IF SOMETHING WENT WRONG DURING DEACTIVATION
         if (!deactivate) {
             return res.status(404).json({ message: "Couldn't deactivate keys." })
         }
 
+        // SENDING RESPONSE BACK WITH A STATUS 200 AND A MESSAGE
         res.status(200).json({ message: "All keys have been deactivated!"})
     } catch (err) {
         // RETURNING ERROR IF SOMETHING WENT WRONG
@@ -229,10 +234,12 @@ const deleteAPIkey = async (req, res) => {
             }
         )
 
+        // CHECKING IF ANYTHING WENT WRONG DURING REMOVING THE API KEY
         if (!removeKey) {
             return res.status(404).json({ message: "Couldn't remove key." })
         }
 
+        // SENDING RESPONSE WITH STATUS 200 AND A MESSAGE
         res.status(200).json({ message: "Key removed successfully!"})
     } catch (err) {
         // RETURNING ERROR IF SOMETHING WENT WRONG
@@ -251,6 +258,7 @@ const getAllAPIkeys = async (req, res) => {
                 return res.status(404).json({ message: "Cannot get users." })
             }
 
+            // CREATING VARIABLE TO STORE USER OBJECT IN WITH ONLY THE NECESSERY INFORMATION
             var userInfo = users.map((user) => {
                 return {
                     username: user.username,
@@ -259,6 +267,7 @@ const getAllAPIkeys = async (req, res) => {
                 }
             }) 
 
+            // CHECKS IF ANYTHING WENT WRONG DURING THE INFORMATION RETRIEVAL
             if (!userInfo) {
                 return res.status(400).json({ message: 'Could not get user and API key information.' })
             }

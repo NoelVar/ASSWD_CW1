@@ -1,7 +1,10 @@
+// NOTE: IMPORTS ----------------------------------------------------------------------------------
 import { createContext, useReducer, useEffect} from 'react'
 
+// CREATING CONTEXT
 export const AuthContext = createContext()
 
+// CREATING REDUCER AND CASES
 export const authReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN': 
@@ -13,11 +16,13 @@ export const authReducer = (state, action) => {
     }
 }
 
+// CREATING CONTEXT PROVIDER
 export const AuthContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, {
         user: null
     })
 
+    // USING USEEFFECT TO CHECK IF USER IS ALREADY STORED IN LOCALSTORAGE
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
 
@@ -26,9 +31,12 @@ export const AuthContextProvider = ({ children }) => {
         }
     },[])
 
+    // RETURNING CONTEXT PROVIDER THAT WRAPPS AROUND THE 'children' COMPONENT (APP)
     return (
         <AuthContext.Provider value={{...state, dispatch}}>
             { children }
         </AuthContext.Provider>
     )
 }
+
+// END OF DOCUMENT --------------------------------------------------------------------------------

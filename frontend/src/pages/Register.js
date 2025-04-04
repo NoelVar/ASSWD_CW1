@@ -1,9 +1,12 @@
+// NOTE: IMPORTS ----------------------------------------------------------------------------------
 import { useState } from 'react'
 import {Link, useNavigate} from 'react-router'
 import { useAuthContext } from '../hooks/useAuthContext'
 
+// REGISTER
 const Register = () => {
 
+    // CONSTANTS/VARIABLES
     const navigate = useNavigate()
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
@@ -13,8 +16,11 @@ const Register = () => {
     const [error, setError] = useState(null)
     const { dispatch } = useAuthContext()
 
+    // REGISTER FUNCTION
     const registerAttempt = async (e) => {
         e.preventDefault()
+
+        // ATTEMPTING REGISTER
         try {
             const response = await fetch('https://asswd-backend.onrender.com/auth/register', {
                 method: 'POST',
@@ -26,29 +32,34 @@ const Register = () => {
 
             const data = await response.json()
             
+            // VALIDATING RESPONSE
             if (!response.ok) {
                 setError(data.message)
                 return
             }
 
+            // SETTING LOCAL STORAGE
             localStorage.setItem('user', JSON.stringify(data.user))
             localStorage.setItem('id', data.user.id)
             localStorage.setItem('email', data.user.email)
             localStorage.setItem('token', data.user.token)
+            // DISPATCHING LOGIN ACTION
             dispatch({type: 'LOGIN', payload: data.user})
+            // SETTING useStates
             setError(null)
             setMessage("Registering was successful!")
-            console.log(data.message)
+            // NAVIGATING USER ON SUCCESSION
             setTimeout(() => {
                 navigate('/countries')
             }, 2000)
-            // Handle successful login (e.g., save token, redirect)
-            
         } catch (error) {
+            // HANDLING ERROR
             console.error('Registering error:', error)
+            setError("Registering error: " + error)
         }
     }
 
+    // RETURNING VISUALS
     return (
         <div className="form-container">
             <form className="auth-form">
@@ -94,3 +105,5 @@ const Register = () => {
 }
 
 export default Register
+
+// END OF DOCUMENT --------------------------------------------------------------------------------

@@ -1,3 +1,4 @@
+// NOTE: IMPORTS ----------------------------------------------------------------------------------
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home';
 import NavigationBar from './components/NavigationBar';
@@ -10,33 +11,45 @@ import AdminKeyMgmt from './pages/AdminKeyMgmt';
 import { useEffect, useState } from 'react';
 import { useAuthContext } from './hooks/useAuthContext';
 
+
+// APP
 function App() {
 
+  // CONSTANTS/VARIABLES
   const [role, setRole] = useState('user')
   const { user } = useAuthContext()
 
+  // FETCHING USER TO FIND OUT ROLE
   useEffect(() => {
     const getUser = async () => {
         const id = localStorage.getItem('id')
-        
-        const response = await fetch('https://asswd-backend.onrender.com/user/single-user', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id })
-        })
+        try {
+          const response = await fetch('https://asswd-backend.onrender.com/user/single-user', {
+              method: "POST",
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ id })
+          })
 
-        if (response.ok) {
-            const data = await response.json()
-            setRole(data.role)
+          // CHECKING RESPONSE
+          if (response.ok) {
+              const data = await response.json()
+              setRole(data.role)
+          }
+        } catch (error) {
+          // HANDLING ERROR
+          console.error(error)
         }
     }
+
+    // ONLY RUNNING FUNCTION IF USER IS LOGGED IN
     if (user) {
       getUser()
     }
   }, [user])
 
+  // RETURNING ROUTES WITH CONDITIONS (eg.: role, if logged in)
   return (
     <div className="App">
         <BrowserRouter>
@@ -83,3 +96,5 @@ function App() {
 }
 
 export default App;
+
+// END OF DOCUMENT --------------------------------------------------------------------------------

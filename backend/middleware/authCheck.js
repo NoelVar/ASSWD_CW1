@@ -1,6 +1,7 @@
+// NOTE: IMPORTS ----------------------------------------------------------------------------------
 const jwt = require('jsonwebtoken')
-const userModel = require('../models/userModel')
 
+// AUTH CHECK FUNCTION
 const authCheck = async (req, res, next) => {
     try {
         // GET AUTH HEADER
@@ -9,17 +10,20 @@ const authCheck = async (req, res, next) => {
         //  SPLIT TOKEN FROM 'Bearer'
         const token = authorization.split(' ')[1]
 
-        // Verify token and decode
+        // VERIFYING TOKEN AND DECODING IT
         if (token) {
             jwt.verify(token, process.env.SECRET)
             next()
         } else {
             return res.status(401).json({ message: 'Request is not authorized' })
         }
-        
+
     } catch (error) {
+        // SENDING BACK AN ERROR IF COULDN'T CREATE
         return res.status(401).json({ message: 'Request is not authorized' })
     }
 }
 
 module.exports = authCheck
+
+// END OF DOCUMENT --------------------------------------------------------------------------------

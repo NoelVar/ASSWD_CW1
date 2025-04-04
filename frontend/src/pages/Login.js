@@ -1,9 +1,12 @@
+// NOTE: IMPORTS ----------------------------------------------------------------------------------
 import { useState } from 'react'
 import {Link, useNavigate} from 'react-router'
 import { useAuthContext } from '../hooks/useAuthContext'
 
+// LOGIN
 const Login = () => {
 
+    // CONSTANTS/VARIABLES
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -11,8 +14,11 @@ const Login = () => {
     const [error, setError] = useState(null)
     const { dispatch } = useAuthContext()
 
+    // LOGIN FUNCTION
     const loginAttempt = async (e) => {
         e.preventDefault()
+
+        // ATTEMPTING LOGIN
         try {
             const response = await fetch('https://asswd-backend.onrender.com/auth/login', {
                 method: 'POST',
@@ -25,29 +31,34 @@ const Login = () => {
 
             const data = await response.json()
             
+            // VALIDATING RESPONSE
             if (!response.ok) {
                 setError(data.message)
                 return
             }
 
+            // SETTING LOCAL STORAGE
             localStorage.setItem('user', JSON.stringify(data.user))
             localStorage.setItem('id', data.user.id)
             localStorage.setItem('email', data.user.email)
             localStorage.setItem('token', data.user.token)
+            // DISPATCHING LOGIN ACTION
             dispatch({type: 'LOGIN', payload: data.user})
+            // SETTING useStates
             setError(null)
             setMessage("Login was successful!")
-            console.log(data.message)
+            // NAVIGATING TO COUNTRIES
             setTimeout(() => {
                 navigate('/countries')
             }, 2000)
-            // Handle successful login (e.g., save token, redirect)
-            
         } catch (error) {
+            // CATHING ERRORS
             console.error('Login error:', error)
+            setError("Login error: " + err)
         }
     }
 
+    // RETURN VISUALS
     return (
         <div className="form-container">
             <form className="auth-form">
@@ -77,3 +88,5 @@ const Login = () => {
 }
 
 export default Login
+
+// END OF DOCUMENT --------------------------------------------------------------------------------

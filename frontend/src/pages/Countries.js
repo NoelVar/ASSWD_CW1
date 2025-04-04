@@ -1,33 +1,49 @@
+// NOTE: IMPORTS ----------------------------------------------------------------------------------
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
+// COUNTRIES
 const Countries = () => {
 
+    // CONSTATS/VARIABLES
     const [countries, setCountries] = useState(null)
     const [activeKey, setActiveKey] = useState(false)
     const [searchPrompt, setSearchPrompt] = useState('')
     const [filteredCountries, setFilteredCountries] = useState(null)
+    // RETRIEVING USER AND ID FROM LOCALSTORAGE
     const user = localStorage.getItem('user')
     const id = localStorage.getItem('id')
 
+    // POP UP MESSAGE FUNCTION TO REUSE
+    const popUpGenerator = (passedInData) => {
+        setMessage(passedInData)
+        setTimeout(() => {
+            setMessage(null)
+        }, 5000)
+    }
+
+    // FETCHING COUNTRIES USING REST API
     useEffect(() => {
         const fetchCountries = async () => {
             try {
                 const response = await fetch('https://restcountries.com/v3.1/all?fields=name,currencies,capital,languages,flags,flag')
                 const json = await response.json()
 
+                // VALIDATING RESPONSE
                 if (!response.ok) {
-                    console.log('Response is unavailable.')
+                    popUpGenerator('Response is unavailable.')
                 } else {
                     setCountries(json)
                     setFilteredCountries(json)
                 }
 
             } catch (err) {
-                console.err("ERROR: " + err)
+                // SENDING ERROR RESPONSE
+                popUpGenerator("ERROR: " + err)
             }
         }
 
+        // FETCHING USER
         const fetchUser = async () => {
             try {
                 const response = await fetch('https://asswd-backend.onrender.com/user/single-user', {
@@ -39,8 +55,9 @@ const Countries = () => {
                 })
                 const json = await response.json()
 
+                // VALIDATING RESPONSE
                 if (!response.ok) {
-                    console.log('Response is unavailable.')
+                    popUpGenerator('Response is unavailable.')
                 } else {
                     for(var i = 0; i < json.apikeys.length; i++) {
                         if (json.apikeys[i].status === 'active') {
@@ -50,9 +67,10 @@ const Countries = () => {
                 }
 
             } catch (err) {
-                console.error("ERROR: " + err)
+                popUpGenerator(err.message)
             }
         }
+        // ONLY RUNNING FUNCTIONS IF USER IS LOGGED IN
         {user &&
             fetchCountries() 
             fetchUser()
@@ -60,6 +78,7 @@ const Countries = () => {
     }, [])
 
 
+    // SEARCH FUNCTION
     const handleSearch = (e) => {
         e.preventDefault()
         var searchData = countries.filter((country) => {
@@ -68,6 +87,7 @@ const Countries = () => {
         setFilteredCountries(searchData)
     }
 
+    // RETURNING VISUALS
     return (
         <div className="country-page">
             <h1>Search for countries!</h1>
@@ -118,3 +138,5 @@ const Countries = () => {
 }
 
 export default Countries
+
+// END OF DOCUMENT --------------------------------------------------------------------------------

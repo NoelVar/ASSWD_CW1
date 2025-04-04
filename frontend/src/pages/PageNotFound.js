@@ -1,5 +1,7 @@
+// NOTE: IMPORTS ----------------------------------------------------------------------------------
 import { Link } from "react-router-dom"
 
+// PAGE NOT FOUND COMPONENT
 const PageNotFound = () => {
     return (
         <div className="page-not-found">
@@ -10,3 +12,5 @@ const PageNotFound = () => {
 }
 
 export default PageNotFound
+
+// END OF DOCUMENT --------------------------------------------------------------------------------
