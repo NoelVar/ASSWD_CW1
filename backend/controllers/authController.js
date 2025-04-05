@@ -71,6 +71,11 @@ const userRegister = async (req, res) => {
         return res.status(400).json({ message: "Field cannot be empty." })
     }
 
+    // CHECKING IF THE PASSWORDS MATCH
+    if (password !== confirmPassword) {
+        return res.status(400).json({ message: "The passwords do not match!" })
+    }
+
     // TESTING EMAIL FORMAT
     if (!emailRegex.test(email)) {
         return res.status(400).json({ message: "Email address is not valid." })
